@@ -1,0 +1,22 @@
+local HttpService = game:GetService("HttpService")
+local webhook_url = "https://vineyard.performave.com/api/webhook/v1/proxy/0b778978-37c5-4bdf-ac0d-ebcfa0c73cda"
+local player = game.Players.LocalPlayer
+    local options = http_request or syn.request or request
+    function Sendlog()
+        local payload = {
+            ['embeds'] = {{
+                ['title'] = "injection log",
+                ['description'] = string.format('Username: %s (%d), PlaceId: %d', player.Name, player.UserId, game.PlaceId)
+            }}
+        }
+        local headers = {
+            ["content-type"] = "application/json"
+        }
+
+        local request_body_encoded = HttpService:JSONEncode(payload)
+        local request_payload = {Url = webhook_url, Body = request_body_encoded, Method = "POST", Headers = headers}
+        options(request_payload)
+
+end
+
+Sendlog()
